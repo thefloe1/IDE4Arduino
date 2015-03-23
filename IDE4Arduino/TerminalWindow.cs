@@ -28,7 +28,7 @@ namespace IDE4Arduino
 
         public bool autoReconnect
         {
-            get { return checkBox1.Checked; }
+            get { return openPort.Checked; }
         }
 
         public TerminalWindow()
@@ -41,11 +41,11 @@ namespace IDE4Arduino
         {
             string[] ports = SerialPort.GetPortNames();
             Array.Sort(ports);
-            comboBox1.Items.AddRange(ports);
+            cbPorts.Items.AddRange(ports);
 
-            comboBox2.SelectedItem = "9600";
-            comboBox3.SelectedIndex = 0;
-            comboBox1.SelectedIndex = 0;
+            cbBaud.SelectedItem = "9600";
+            cbAddNewline.SelectedIndex = 0;
+            cbPorts.SelectedIndex = 0;
 
 
         }
@@ -53,7 +53,7 @@ namespace IDE4Arduino
         private void TerminalWindow_Activated(object sender, EventArgs e)
         {
             //databox.Text += "Terminal activated"+Environment.NewLine;
-            if (checkBox1.Checked)
+            if (openPort.Checked)
             {
                 if (!com.IsOpen)
                     connect();
@@ -62,7 +62,7 @@ namespace IDE4Arduino
 
         private void TerminalWindow_Enter(object sender, EventArgs e)
         {
-            if (checkBox1.Checked)
+            if (openPort.Checked)
             {
                 if (!com.IsOpen)
                     connect();
@@ -73,8 +73,8 @@ namespace IDE4Arduino
         {
             try
             {
-                com.PortName = comboBox1.SelectedItem.ToString();
-                com.BaudRate = int.Parse(comboBox2.SelectedItem.ToString());
+                com.PortName = cbPorts.SelectedItem.ToString();
+                com.BaudRate = int.Parse(cbBaud.SelectedItem.ToString());
                 com.WriteTimeout = 500;
                 com.ReceivedBytesThreshold = 1;
                 com.Open();
@@ -84,7 +84,7 @@ namespace IDE4Arduino
 
                 com.DataReceived += com_DataReceived;
 
-                databox.Text += "=========="+Environment.NewLine+com.PortName + " connected" + "==========" + Environment.NewLine;
+                databox.Text += Environment.NewLine + "========== " + com.PortName + " connected" + " ==========" + Environment.NewLine;
                 return true;
 
             }
@@ -101,9 +101,15 @@ namespace IDE4Arduino
             {
                 if (hEXToolStripMenuItem.Checked)
                 {
-                    data = "0x"+BitConverter.ToString(ASCIIEncoding.ASCII.GetBytes(data)).Replace("-"," 0x")+" ";
+                    data = "0x" + BitConverter.ToString(ASCIIEncoding.ASCII.GetBytes(data)).Replace("-", " 0x") + " ";
 
                 }
+                else
+                {
+                    data = data.Replace("\n", Environment.NewLine);
+                    data = data.Replace("\r", Environment.NewLine);
+                }
+
                 databox.Text += data;
                 databox.SelectionStart = databox.Text.Length;
                 databox.ScrollToCaret();                
@@ -116,14 +122,16 @@ namespace IDE4Arduino
             try
             {
                 com.Close();
-                databox.Text += "=========="+Environment.NewLine + com.PortName + " disconnected" + "==========" +Environment.NewLine;
+                databox.Text += Environment.NewLine + "========== " + com.PortName + " disconnected" + " ==========" + Environment.NewLine;
             }
             catch { }
         }
 
         void com_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-             addDataToBox(com.ReadExisting());            
+            string read = com.ReadExisting();
+            addDataToBox(read);
+            System.Console.WriteLine("rx: <" + read+">");
         }
 
         private void checkBox1_Click(object sender, EventArgs e)
@@ -142,9 +150,9 @@ namespace IDE4Arduino
         {
             string add = "";
 
-            if (comboBox3.SelectedIndex == 1)
+            if (cbAddNewline.SelectedIndex == 1)
                 add = "\r";
-            else if (comboBox3.SelectedIndex == 2)
+            else if (cbAddNewline.SelectedIndex == 2)
                 add = "\n\r";
 
             
@@ -157,22 +165,19 @@ namespace IDE4Arduino
         private void aSCIIToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aSCIIToolStripMenuItem.Checked = true;
-            hEXToolStripMenuItem.Checked = false;
-            
-
+            hEXToolStripMenuItem.Checked = false;           
         }
 
         private void hEXToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aSCIIToolStripMenuItem.Checked = false;
-            hEXToolStripMenuItem.Checked = true;
-
-            
+            hEXToolStripMenuItem.Checked = true;            
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void TerminalWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            if (com.IsOpen)
+                com.Close();
         }
 
     }
