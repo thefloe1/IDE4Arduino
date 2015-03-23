@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="IDE4Arduino" Language="1033" Version="0.0.2" Manufacturer="Tobias Floery" UpgradeCode="bc812a6b-9b70-49b9-8009-b1f74e074e26">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <Upgrade Id='bc812a6b-9b70-49b9-8009-b1f74e074e26'>
+      <UpgradeVersion OnlyDetect='yes' Property='NEWERFOUND'
+        Minimum='1.0.1' IncludeMinimum='no' />
+    </Upgrade>
+
+
+    <CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
+
+
+    <InstallExecuteSequence>
+      <Custom Action='NoDowngrade' After='FindRelatedProducts'>NEWERFOUND</Custom>
+    </InstallExecuteSequence>
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <!--<UIRef Id="WixUI_InstallDir" />-->
+    <UIRef Id="WixUI_InstallDir" />
+    
+    <!--
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch IDE4Arduino" />
+    <Property Id="WixShellExecTarget" Value="[#IDE4Arduino.exe]" />
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+    -->
+    
+    
+		<MediaTemplate EmbedCab="yes"/>
+
+		<Feature Id="ProductFeature" Title="IDE4Arduino" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="Shortcuts" />
+		</Feature>
+	</Product>
+
+  <!--
+  <Fragment>
+    
+    <UI>
+      <Publish Dialog="ExitDialog"
+Control="Finish"
+Event="DoAction"
+Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+    </UI>
+  </Fragment>
+-->
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="IDE4Arduino" />
+			</Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="IDE4Arduino" />
+      </Directory>
+		</Directory>    
+  </Fragment>
+
+  
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<Component Id="IDE4Arduino.exe">
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+        <File Id="IDE4Arduino.exe" Source="$(var.IDE4Arduino.TargetPath)" />
+      </Component>
+
+      
+      <Component Id="ScintillaNET" Guid="*">
+        <File Source="$(var.SolutionDir)packages\ScintillaNET v2.6\ScintillaNET.dll" />   
+      </Component>
+      <Component Id="SciLexer64" Guid="*">
+        <File Source="$(var.SolutionDir)packages\ScintillaNET v2.6\SciLexer64.dll" />
+      </Component>
+      <Component Id="SciLexer" Guid="*">
+        <File Source="$(var.SolutionDir)packages\ScintillaNET v2.6\SciLexer.dll" />
+      </Component>
+
+      <Component Id="Docking" Guid="*">
+        <File Source="$(var.SolutionDir)packages\WeifenLuo.WinFormsUI.Docking.dll" />
+      </Component>
+
+
+    </ComponentGroup>
+    <ComponentGroup Id="Shortcuts" Directory="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut">
+      <Shortcut Id="ApplicationStartMenuShortcut"
+     Name="IDE4Arduino"
+   Description="IDE4Arduino"
+    Target="[#IDE4Arduino.exe]"
+          WorkingDirectory="INSTALLFOLDER"/>
+      <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+      <RegistryValue Root="HKCU" Key="Software\Microsoft\IDE4Arduino" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+
+    </ComponentGroup>
+	</Fragment>
+
+
+</Wix>
