@@ -81,25 +81,32 @@ namespace IDE4Arduino
         {
             arduinoLibs = new List<ArduinoLibrary>();
 
-            string[] temp = Directory.GetDirectories(arduinoCoreLibPath);
-            foreach (string dir in temp)
+            try
             {
-                ArduinoLibrary lib = new ArduinoLibrary(dir);
-                arduinoLibs.Add(lib);
-            }
+                string[] temp = Directory.GetDirectories(arduinoCoreLibPath);
+                foreach (string dir in temp)
+                {
+                    ArduinoLibrary lib = new ArduinoLibrary(dir);
+                    arduinoLibs.Add(lib);
+                }
 
-            temp = Directory.GetDirectories(arduinoLibPath);
-            foreach (string dir in temp)
-            {
-                ArduinoLibrary lib = new ArduinoLibrary(dir);
-                arduinoLibs.Add(lib);
-            }
+                temp = Directory.GetDirectories(arduinoLibPath);
+                foreach (string dir in temp)
+                {
+                    ArduinoLibrary lib = new ArduinoLibrary(dir);
+                    arduinoLibs.Add(lib);
+                }
 
-            temp = Directory.GetDirectories(arduinoUserLibPath);
-            foreach (string dir in temp)
-            {
-                ArduinoLibrary lib = new ArduinoLibrary(dir);
-                arduinoLibs.Add(lib);
+                temp = Directory.GetDirectories(arduinoUserLibPath);
+                foreach (string dir in temp)
+                {
+                    ArduinoLibrary lib = new ArduinoLibrary(dir);
+                    arduinoLibs.Add(lib);
+                }
+
+            }
+            catch { 
+            
             }
 
             arduinoLibs.Sort();
