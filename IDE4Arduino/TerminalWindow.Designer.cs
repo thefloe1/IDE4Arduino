@@ -42,16 +42,16 @@
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // cbPorts
             // 
             this.cbPorts.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPorts.FormattingEnabled = true;
             this.cbPorts.Location = new System.Drawing.Point(6, 4);
-            this.cbPorts.Name = "comboBox1";
+            this.cbPorts.Name = "cbPorts";
             this.cbPorts.Size = new System.Drawing.Size(74, 21);
             this.cbPorts.TabIndex = 0;
             // 
-            // comboBox2
+            // cbBaud
             // 
             this.cbBaud.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBaud.FormattingEnabled = true;
@@ -66,7 +66,7 @@
             "57600",
             "115200"});
             this.cbBaud.Location = new System.Drawing.Point(6, 31);
-            this.cbBaud.Name = "comboBox2";
+            this.cbBaud.Name = "cbBaud";
             this.cbBaud.Size = new System.Drawing.Size(74, 21);
             this.cbBaud.TabIndex = 1;
             // 
@@ -76,6 +76,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.databox.ContextMenuStrip = this.contextMenuStrip1;
+            this.databox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.databox.Location = new System.Drawing.Point(86, 4);
             this.databox.Multiline = true;
             this.databox.Name = "databox";
@@ -116,7 +117,7 @@
             this.sendData.Size = new System.Drawing.Size(543, 20);
             this.sendData.TabIndex = 4;
             // 
-            // comboBox3
+            // cbAddNewline
             // 
             this.cbAddNewline.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbAddNewline.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -126,7 +127,7 @@
             "CR",
             "CR+LF"});
             this.cbAddNewline.Location = new System.Drawing.Point(635, 195);
-            this.cbAddNewline.Name = "comboBox3";
+            this.cbAddNewline.Name = "cbAddNewline";
             this.cbAddNewline.Size = new System.Drawing.Size(70, 21);
             this.cbAddNewline.TabIndex = 5;
             // 
@@ -141,13 +142,13 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // checkBox1
+            // openPort
             // 
             this.openPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.openPort.Appearance = System.Windows.Forms.Appearance.Button;
             this.openPort.AutoSize = true;
             this.openPort.Location = new System.Drawing.Point(6, 192);
-            this.openPort.Name = "checkBox1";
+            this.openPort.Name = "openPort";
             this.openPort.Size = new System.Drawing.Size(74, 23);
             this.openPort.TabIndex = 7;
             this.openPort.Text = "connect(ed)";
