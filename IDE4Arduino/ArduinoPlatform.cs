@@ -39,6 +39,7 @@ namespace IDE4Arduino
             this.arch = arch.ToUpper().Trim();
 
             info.Add("runtime.ide.path", arduinoPath);
+            info.Add("runtime.tools.avr-gcc.path", arduinoPath + @"\hardware\tools\avr");
             info.Add("runtime.ide.version", "10600");
             info.Add("build.arch", this.arch);            
             info.Add("build.system.path", platform_path + @"\system");
