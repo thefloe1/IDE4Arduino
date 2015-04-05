@@ -168,7 +168,9 @@ namespace IDE4Arduino
         public static List<FunctionListItem> parseFunctions(string text)
         {
             List<FunctionListItem> functions = new List<FunctionListItem>();
-            Regex myRegex = new Regex(@"\n\s*(\b\s*(?!\b(if|while|for|else)\b)(\b\w+\b)[ \t]+\w+[ \t]*\(.*\))\s*\{");
+
+            //Regex myRegex = new Regex(@"\n\s*(\b\s*(?!\b(if|while|for|else)\b)(\b\w+\b)[ \t]+\w+[ \t]*\(.*\))\s*\{");
+            Regex myRegex = new Regex(@"\n\s*(\b\w+\b[ \t]+(\b\w+\b[ \t])*\b\w+\b+[ \t]*\(.*\))\s*\{");            
 
             foreach (Match myMatch in myRegex.Matches(text))
             {

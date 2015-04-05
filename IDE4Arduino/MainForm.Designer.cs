@@ -369,6 +369,11 @@
             this.helpBrowserToolStripMenuItem.Text = "Help Browser";
             this.helpBrowserToolStripMenuItem.Click += new System.EventHandler(this.helpBrowserToolStripMenuItem_Click);
             // 
+            // outputWindowToolStripMenuItem
+            // 
+            this.outputWindowToolStripMenuItem.Name = "outputWindowToolStripMenuItem";
+            this.outputWindowToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            // 
             // examplesToolStripMenuItem
             // 
             this.examplesToolStripMenuItem.Name = "examplesToolStripMenuItem";
