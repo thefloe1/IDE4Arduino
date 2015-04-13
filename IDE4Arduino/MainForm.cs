@@ -192,7 +192,7 @@ namespace IDE4Arduino
             try
             {
                 string filename="";
-                int lineNum=-1;
+                int lineNum=-1, pos=0;
 
                 string item = outputListBox.SelectedItem.ToString();
                 string[] parts = item.Split(':');
@@ -201,6 +201,7 @@ namespace IDE4Arduino
                 {
                     filename = parts[0];
                     lineNum = int.Parse(parts[1]);
+                    pos = int.Parse(parts[2]);
                     
                     foreach (EditorPage page in dockPanel1.Documents)
                     {
@@ -210,7 +211,9 @@ namespace IDE4Arduino
                             
                             page.Activate();
                             page.Focus();
-                            page.Editor.GoTo.Line(lineNum-1);
+                            page.Editor.GoTo.Line(lineNum - 1);
+                            page.Editor.CurrentPos = page.Editor.CurrentPos + pos;
+                            //page.Editor.GoTo.Position(pos);
 
                             return;
                         }
